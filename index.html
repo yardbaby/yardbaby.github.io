@@ -236,10 +236,17 @@
 </li>
 </ol>
 <p>例2：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">list</span></span>() &#123;</div><div class="line">    //将arguments转成数组</div><div class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</div><div class="line">&#125;</div><div class="line">list(1,2,3); //[1,2,3]</div></pre></td></tr></table></figure></p>
-<p>注释：为什么能实现这样的功能将arguments转成数组？首先call了之后,this指向了所传进去的arguments。我们可以假设slice方法的内部实现是这样子的：创建一个新数组,<br>然后for循环遍历this,将this[i]一个个地赋值给新数组,最后返回该新数组。因此也就可以理解能实现这样的功能了。</p>
+<p>注释：<br>    为什么能实现这样的功能将arguments转成数组？首先call了之后,this指向了所传进去的arguments。我们可以假设slice方法的内部实现是这样子的：创建一个新数组,<br>    然后for循环遍历this,将this[i]一个个地赋值给新数组,最后返回该新数组。因此也就可以理解能实现这样的功能了。</p>
 <ol>
-<li>apply()<br>语法：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// Chrome 14 以及 Internet Explorer 9 仍然不接受类数组对象。</div><div class="line">// thisArg的可能值和call一样</div><div class="line">fun.apply(thisArg[,argsArray]);</div></pre></td></tr></table></figure></li>
+<li>apply()<br>语法：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// Chrome 14 以及 Internet Explorer 9 仍然不接受类数组对象。</div><div class="line">// thisArg的可能值和call一样</div><div class="line">fun.apply(thisArg[,argsArray]);</div></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>例1：<br>var numbers = [5,6,2,3,7];<br>var max = Math.max.apply(null,numbers);<br>console.log(max); //7</p>
+<p>注释：<br>    平时Math.max只能这样子用：Math.max(5,6,2,3,7);<br>    利用apply的第二个参数是数组的特性,从而能够简便地从数组中找到最大值。</p>
+<ol>
+<li>bind()</li>
+</ol>
+<p>语法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fun.bind(thisArg[,arg1[,arg2[,...]]]);</div></pre></td></tr></table></figure></p>
 
       
     </div>
