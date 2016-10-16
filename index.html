@@ -68,13 +68,13 @@
 				<div class="tips-box hide">
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
+						<li>Menu</li>
+						<li>Tags</li>
 						
-						<li>友情链接</li>
+						<li>Links</li>
 						
 						
-						<li>关于我</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -235,23 +235,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">a</span></span>()&#123;</div><div class="line">    console.log(this);</div><div class="line">&#125;</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">b</span></span>() &#123;&#125;</div><div class="line"></div><div class="line">a.call(b) //<span class="keyword">function</span> <span class="function"><span class="title">b</span></span>() &#123;&#125;</div></pre></td></tr></table></figure>
 <p>例2：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">list</span></span>() &#123;</div><div class="line">    //将arguments转成数组</div><div class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</div><div class="line">&#125;</div><div class="line">list(1,2,3); //[1,2,3]</div></pre></td></tr></table></figure>
+<p>注释：<br> 为什么能实现这样的功能将arguments转成数组？首先call了之后,this指向了所传进去的arguments。我们可以假设slice方法的内部实现是这样子的：创建一个新数组,<br> 然后for循环遍历this,将this[i]一个个地赋值给新数组,最后返回该新数组。因此也就可以理解能实现这样的功能了。</p>
 </li>
-</ol>
-<p>注释：<br>    为什么能实现这样的功能将arguments转成数组？首先call了之后,this指向了所传进去的arguments。我们可以假设slice方法的内部实现是这样子的：创建一个新数组,<br>    然后for循环遍历this,将this[i]一个个地赋值给新数组,最后返回该新数组。因此也就可以理解能实现这样的功能了。</p>
-<ol>
 <li><p>apply()<br>语法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// Chrome 14 以及 Internet Explorer 9 仍然不接受类数组对象。</div><div class="line">// thisArg的可能值和call一样</div><div class="line">fun.apply(thisArg[,argsArray]);</div></pre></td></tr></table></figure>
 <p>例1： </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var numbers = [5,6,2,3,7];</div><div class="line">var max = Math.max.apply(null,numbers);</div><div class="line">console.log(max); //7</div></pre></td></tr></table></figure>
+<p>注释：<br> 平时Math.max只能这样子用：Math.max(5,6,2,3,7);<br> 利用apply的第二个参数是数组的特性,从而能够简便地从数组中找到最大值。</p>
 </li>
-</ol>
-<p>注释：<br>    平时Math.max只能这样子用：Math.max(5,6,2,3,7);<br>    利用apply的第二个参数是数组的特性,从而能够简便地从数组中找到最大值。</p>
-<ol>
-<li>bind()</li>
-</ol>
-<p>语法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fun.bind(thisArg[,arg1[,arg2[,...]]]);</div></pre></td></tr></table></figure></p>
+<li><p>bind()<br>语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fun.bind(thisArg[,arg1[,arg2[,...]]]);</div></pre></td></tr></table></figure>
 <p>bind()方法会创建一个新函数,称为绑定函数。<br>bind是ES5新增的一个方法,不会执行对应的函数(call或apply会自动执行对应的函数),而是返回对绑定函数的引用。<br>当调用这个绑定函数时，thisArg参数作为 this，第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。<br>简单地说,bind会产生一个新的函数,这个函数可以有预设的参数。</p>
-<p>例1：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">list</span></span>() &#123;</div><div class="line">    //将arguments转成数组</div><div class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</div><div class="line">&#125;</div><div class="line">var leadingThirtysevenList = list.bind(undefined, 37); // 绑定函数</div><div class="line">var list = leadingThirtysevenList(1, 2, 3); // 调用绑定函数</div><div class="line">console.log(list); // [37, 1, 2, 3]</div></pre></td></tr></table></figure></p>
+<p>例1：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">list</span></span>() &#123;</div><div class="line">    //将arguments转成数组</div><div class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</div><div class="line">&#125;</div><div class="line">var leadingThirtysevenList = list.bind(undefined, 37); // 绑定函数</div><div class="line">var list = leadingThirtysevenList(1, 2, 3); // 调用绑定函数</div><div class="line">console.log(list); // [37, 1, 2, 3]</div></pre></td></tr></table></figure>
 <p>把类数组换成真正的数组,bind能够更简单地使用：</p>
 <ul>
 <li><p>apply用法</p>
@@ -261,14 +257,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var unboundSlice = Array.prototype.slice;</div><div class="line">var slice = Function.prototype.apply.bind(unboundSlice);</div><div class="line">//...</div><div class="line">slice(arguments); //直接调用,简单</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<ol>
-<li>它们的区别</li>
-</ol>
-<p>相同之处：改变函数体内this的指向<br>不同之处：</p>
+</li>
+<li><p>它们的区别<br>相同之处：改变函数体内this的指向<br>不同之处：</p>
 <ul>
 <li>call、apply的区别：接受参数的方式不一样。</li>
 <li>bind：不立即执行。而apply、call 立即执行。</li>
 </ul>
+</li>
+</ol>
 <h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2>
       
     </div>
