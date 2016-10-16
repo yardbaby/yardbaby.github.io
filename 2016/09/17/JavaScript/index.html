@@ -26,7 +26,7 @@ thisArg：fun函数运行时指定的this值,可能的值为：
 不传,或者null,undefined,this指向window对象
 传递另一个函数的函数名fun2,this指向函数fun2的引用
 值为原始值(数字、字符串、布尔值),thi会指向该原始值的自动包装对">
-<meta property="og:updated_time" content="2016-10-16T11:38:21.780Z">
+<meta property="og:updated_time" content="2016-10-16T11:39:54.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript">
 <meta name="twitter:description" content="call、apply、bind
@@ -99,7 +99,7 @@ thisArg：fun函数运行时指定的this值,可能的值为：
 						<li>Links</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -280,17 +280,16 @@ thisArg：fun函数运行时指定的this值,可能的值为：
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">list</span></span>() &#123;</div><div class="line">    //将arguments转成数组</div><div class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</div><div class="line">&#125;</div><div class="line">var leadingThirtysevenList = list.bind(undefined, 37); // 绑定函数</div><div class="line">var list = leadingThirtysevenList(1, 2, 3); // 调用绑定函数</div><div class="line">console.log(list); // [37, 1, 2, 3]</div></pre></td></tr></table></figure>
 <p>把类数组换成真正的数组,bind能够更简单地使用：</p>
 <ul>
-<li>apply用法<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var slice = Array.prototype.slice;</div><div class="line">//...</div><div class="line">slice.apply(arguments); //类似对象的方法那样调用</div></pre></td></tr></table></figure>
+<li><p>apply用法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var slice = Array.prototype.slice;</div><div class="line">//...</div><div class="line">slice.apply(arguments); //类似对象的方法那样调用</div></pre></td></tr></table></figure>
+</li>
+<li><p>bind用法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var unboundSlice = Array.prototype.slice;</div><div class="line">var slice = Function.prototype.apply.bind(unboundSlice);</div><div class="line">//...</div><div class="line">slice(arguments); //直接调用,简单</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-</ol>
+<li><p>它们的区别<br>相同之处：改变函数体内this的指向<br>不同之处：</p>
 <ul>
-<li>bind用法<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var unboundSlice = Array.prototype.slice;</div><div class="line">var slice = Function.prototype.apply.bind(unboundSlice);</div><div class="line">//...</div><div class="line">slice(arguments); //直接调用,简单</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol>
-<li>它们的区别<br>相同之处：改变函数体内this的指向<br>不同之处：<ul>
 <li>call、apply的区别：接受参数的方式不一样。</li>
 <li>bind：不立即执行。而apply、call 立即执行。</li>
 </ul>
